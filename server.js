@@ -12,28 +12,25 @@ var Storage = {
     },
     remove: function(id) {
         var index;
-        for (var i = 0 ; i < this.items.length ; i++) {
-          if (this.items[i].id === id) {
-            index = i;
-            break;
+        for(var i = this.items.length; i >= 0; i--) {
+          if (this.items[i] === id) {
+            index = i - 1;
           }
+            else{
+                if(this.items[i] <= 2)
+                index = i;
+            }
         }
         this.items.splice(index, 1);
         return id;
     },
     edit: function(id, item) {
         var item = {
-            name: item,
-            id: id
+            name: item, 
+            id:id
         };
-        var index;
-        for (var i = 0 ; i < this.items.length ; i++) {
-          if (this.items[i].id === id) {
-            index = i;
-            break;
-          }
-        }
-        this.items.splice(index, 1, item);
+        var oldItem = Storage.item;
+        this.items.splice(id - 1, 1, item);
     }
 };
 var createStorage = function() {
@@ -73,7 +70,7 @@ app.post('/items', jsonParser, function(request, response) {
 
 app.delete('/items/:id', jsonParser, function(request, response) {
   var id = request.params.id;
-  var deleted = storage.remove(storage.items[id - 1])
+  var deleted = storage.remove(storage.items[id])
   return response.status(200).json(deleted);
 });
 
@@ -82,7 +79,7 @@ app.put('/items/:id', jsonParser, function(request, response) {
   console.log(request.body.name);
   var newItem = request.body.name;
   storage.edit(id, newItem);
-  return response.status(200).json(request.body.name);
+  return response.status(200).json(newItem);
 });
 
 
