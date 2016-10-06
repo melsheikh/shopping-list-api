@@ -59,7 +59,7 @@ app.get('/items', function(request, response) {
     response.json(storage.items);
 });
 
-app.listen(3000, process.env.IP);
+app.listen(process.env.PORT ||3000, process.env.IP);
 
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
@@ -91,3 +91,6 @@ app.put('/items/:id', jsonParser, function(request, response) {
   storage.edit(id, newItem);
   return response.status(200).json(newItem);
 });
+
+exports.app = app;
+exports.storage = storage;

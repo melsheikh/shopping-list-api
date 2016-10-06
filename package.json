@@ -13,6 +13,9 @@
   "scripts": {
     "start": "node server.js"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0"
+  },
   "license": "ISC"
 }
